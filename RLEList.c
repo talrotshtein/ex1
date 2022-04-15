@@ -3,5 +3,5 @@
 struct RLEList_t{
     //TODO: implement
 };
-hi hello
+hi
 //implement the functions here
