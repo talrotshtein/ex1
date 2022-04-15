@@ -30,3 +30,8 @@ void RLEListDestroy(RLEList list) {
     free(list);
 }
 
+// hey tal you are doing funcs 3-6 so implement them between my
+// funcs so it is the same order they wrote it.
+
+
+
