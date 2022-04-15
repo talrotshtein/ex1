@@ -21,3 +21,12 @@ RLEList RLEListCreate() {
         ptr->next = NULL;
         return ptr;
     }
+
+void RLEListDestroy(RLEList list) {
+    if(!list) {
+        return;
+    }
+    RLEListDestroy(list->next);
+    free(list);
+}
+
