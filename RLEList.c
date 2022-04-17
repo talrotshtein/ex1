@@ -2,12 +2,13 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-struct RLEList_t{
+
+
+struct RLEList_t {
     int length;
     char letter;
-    struct node* next;
+    struct RLEList_t* next;
 };
-
 //implement the functions here
 
 RLEList RLEListCreate() {
@@ -31,7 +32,19 @@ void RLEListDestroy(RLEList list) {
 }
 
 // hey tal you are doing funcs 3-6 so implement them between my
-// funcs so it is the same order they wrote it.
+// funcs 'so it is the same order they wrote it.
 
 
+
+RLEListResult RLEListMap(RLEList list, MapFunction map_function)
+{
+    RLEListResult status = 0;
+    if (!list)
+    {
+        return RLE_LIST_NULL_ARGUMENT;
+    }
+    status = RLEListMap(list->next,map_function);
+    list->letter = map_function(list->letter);
+    return RLE_LIST_SUCCESS;
+}
 
