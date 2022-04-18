@@ -149,3 +149,36 @@ RLEListResult RLEListMap(RLEList list, MapFunction map_function);
 
 
 #endif // HW1_RLELIST_H
+
+
+/**
+ * this function gets the length of the string for the function RLEListExportToString
+ * this function was made by Shahar
+ * @param list
+ * @return
+ */
+int RLEStringLength(RLEList list);
+
+/**
+ * this function is creating the string by recursion
+ * this function was made by Shahar
+ * @param list
+ * @param array
+ * @param length
+ * @return
+ */
+
+void MakeString (RLEList list,char* array);
+/**
+ * this function counts the number of digits in the struct length parameter.
+ * this function was made by Shahar.
+ * @param list
+ * @return
+ */
+int GetDigits (RLEList list);
+/**
+ * this function puts the letter and the number inside the string.
+ * this function was made by Shahar.
+ * @param list
+ */
+void PutValuesInString(RLEList list,char* array);
