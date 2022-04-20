@@ -15,12 +15,19 @@ struct RLEList_t {
 RLEList RLEListCreate() {
 
         RLEList ptr = malloc(sizeof(*ptr));
+        RLEList real_ptr = malloc(sizeof(*real_ptr));
         if (!ptr) {
+            return NULL;
+        }
+        if (!real_ptr) {
             return NULL;
         }
         ptr->size = 0;
         ptr->value = '\0';
-        ptr->next = NULL;
+        ptr->next = real_ptr;
+        real_ptr->size = 0;
+        real_ptr->value = '\0';
+        real_ptr->next = NULL;
         return ptr;
     }
 
@@ -195,13 +202,14 @@ char RLEListGet(RLEList list, int index, RLEListResult *result)
 
 RLEListResult RLEListMap(RLEList list, MapFunction map_function)
 {
+    RLEList real_list = list->next;
     RLEListResult status = RLE_LIST_SUCCESS;
-    if (!list)
+    if (!real_list)
     {
         return RLE_LIST_NULL_ARGUMENT;
     }
-    status = RLEListMap(list->next,map_function);
-    list->value = map_function(list->value);
+    status = RLEListMap(real_list->next,map_function);
+    real_list->value = map_function(real_list->value);
     return RLE_LIST_SUCCESS;
 }
 
