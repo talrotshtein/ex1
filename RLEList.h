@@ -188,3 +188,5 @@ void tempPrintList(RLEList list);
 RLEList getNode(RLEList list, int index);
 
 void mergeNodes(RLEList list);
+
+RLEListResult aux_RLEListMap(RLEList list, MapFunction map_function);

@@ -219,14 +219,7 @@ char RLEListGet(RLEList list, int index, RLEListResult *result)
 RLEListResult RLEListMap(RLEList list, MapFunction map_function)
 {
     RLEList real_list = list->next;
-    RLEListResult status = RLE_LIST_SUCCESS;
-    if (!real_list)
-    {
-        return RLE_LIST_NULL_ARGUMENT;
-    }
-    status = RLEListMap(real_list->next,map_function);
-    real_list->value = map_function(real_list->value);
-    return RLE_LIST_SUCCESS;
+    return aux_RLEListMap(real_list,map_function);
 }
 
 int RLEStringLength(RLEList list)
@@ -322,4 +315,16 @@ void tempPrintList(RLEList list)
         printf("%c\n",ptr->value);
         ptr = ptr->next;
     }
+}
+
+RLEListResult aux_RLEListMap(RLEList list, MapFunction map_function)
+{
+    RLEListResult status = RLE_LIST_SUCCESS;
+    if (!list)
+    {
+        return RLE_LIST_NULL_ARGUMENT;
+    }
+    status = aux_RLEListMap(list->next,map_function);
+    list->value = map_function(list->value);
+    return RLE_LIST_SUCCESS;
 }
