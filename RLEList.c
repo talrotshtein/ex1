@@ -12,15 +12,19 @@ struct RLEList_t {
 };
 //implement the functions here
 //test
-RLEList RLEListCreate() {
-
+RLEList RLEListCreate()
+{
         RLEList ptr = malloc(sizeof(*ptr));
-        if (!ptr) {
+        RLEList realPtr =  malloc(sizeof(*realPtr));
+        if (!ptr || !realPtr) {
             return NULL;
         }
         ptr->size = 0;
         ptr->value = '\0';
-        ptr->next = NULL;
+        ptr->next = realPtr;
+        realPtr->size= 0;
+        realPtr->value = '\0';
+        realPtr->next = NULL;
         return ptr;
     }
 
@@ -77,7 +81,7 @@ int RLEListSize(RLEList list)
         return -1;
     }
     int size_sum = 0;
-    RLEList ptr = list;
+    RLEList ptr = list->next;
     while(ptr != NULL)
     {
         size_sum = size_sum + ptr->size;
@@ -96,22 +100,22 @@ RLEListResult RLEListRemove(RLEList list, int index)
     {
         return RLE_LIST_INDEX_OUT_OF_BOUNDS;
     }
-    RLEList temp;
+    RLEList temp, realList = list->next;
     if(index == 0)
     {
-        if(list->size > 1)
+        if(realList->size > 1)
         {
-            list->size = list->size - 1;
+            realList->size = realList->size - 1;
         }
         else
         {
-            temp = list;
-            list = list->next;
+            temp = realList;
+            list->next = realList->next;
             free(temp);
         }
         return RLE_LIST_SUCCESS;
     }
-    RLEList ptr = list;
+    RLEList ptr = realList;
     int i = 0, count=0;
     while(ptr != NULL)
     {
@@ -123,13 +127,14 @@ RLEListResult RLEListRemove(RLEList list, int index)
                 if(ptr->next == NULL)
                 {
                     free(ptr);
-                    ptr = NULL;
+                    temp = getNode(realList, count-1);
+                    temp->next = NULL;
                 }
                 else
                 {
                     temp = ptr->next;
                     free(ptr);
-                    RLEList temp2 = getNode(list, count-1);
+                    RLEList temp2 = getNode(realList, count-1);
                     temp2->next = temp;
                 }
             }
@@ -175,7 +180,7 @@ char RLEListGet(RLEList list, int index, RLEListResult *result)
         }
         return 0;
     }
-    RLEList ptr = list;
+    RLEList ptr = list->next;
     int i = 0;
     while(ptr != NULL)
     {
