@@ -182,3 +182,7 @@ int GetDigits (RLEList list);
  * @param list
  */
 void PutValuesInString(RLEList list,char* array);
+
+void tempPrintList(RLEList list);
+
+RLEList getNode(RLEList list, int index);

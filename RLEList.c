@@ -83,13 +83,6 @@ int RLEListSize(RLEList list)
         size_sum = size_sum + ptr->size;
         ptr = ptr->next;
     }
-    /*for(RLEList ptr = list; ptr != NULL; ptr = ptr->next)
-    {
-        size_sum += ptr->size;
-    }
-     */
-
-    printf("%d\n",size_sum);
     return size_sum;
 }
 
@@ -119,7 +112,7 @@ RLEListResult RLEListRemove(RLEList list, int index)
         return RLE_LIST_SUCCESS;
     }
     RLEList ptr = list;
-    int i = 0;
+    int i = 0, count=0;
     while(ptr != NULL)
     {
         i+=ptr->size;
@@ -136,7 +129,8 @@ RLEListResult RLEListRemove(RLEList list, int index)
                 {
                     temp = ptr->next;
                     free(ptr);
-                    ptr = temp;
+                    RLEList temp2 = getNode(list, count-1);
+                    temp2->next = temp;
                 }
             }
             else
@@ -146,20 +140,39 @@ RLEListResult RLEListRemove(RLEList list, int index)
             return RLE_LIST_SUCCESS;
         }
         ptr = ptr->next;
+        count++;
     }
     return RLE_LIST_ERROR;
+}
+
+RLEList getNode(RLEList list, int index)
+{
+    RLEList ptr = list;
+    int i=0;
+    while(i<index && ptr != NULL)
+    {
+        i++;
+        ptr = ptr->next;
+    }
+    return ptr;
 }
 
 char RLEListGet(RLEList list, int index, RLEListResult *result)
 {
     if(list == NULL)
     {
-        *result = RLE_LIST_NULL_ARGUMENT;
+        if(result !=NULL)
+        {
+            *result = RLE_LIST_NULL_ARGUMENT;
+        }
         return 0;
     }
     if(index < 0 || RLEListSize(list) <= index)
     {
-        *result = RLE_LIST_INDEX_OUT_OF_BOUNDS;
+        if(result !=NULL)
+        {
+            *result = RLE_LIST_INDEX_OUT_OF_BOUNDS;
+        }
         return 0;
     }
     RLEList ptr = list;
@@ -169,7 +182,10 @@ char RLEListGet(RLEList list, int index, RLEListResult *result)
         i += ptr->size;
         if(i >= index+1)
         {
-            *result = RLE_LIST_SUCCESS;
+            if(result != NULL)
+            {
+                *result = RLE_LIST_SUCCESS;
+            }
             return ptr->value;
         }
         ptr = ptr->next;
@@ -255,5 +271,16 @@ void PutValuesInString(RLEList list,char* array)
         *(array+ GetDigits(list)-i) = tmp%NUM_OF_DIGITS;
         tmp = tmp/NUM_OF_DIGITS;
         i++;
+    }
+}
+
+void tempPrintList(RLEList list)
+{
+    RLEList ptr = list;
+    while (ptr != NULL)
+    {
+        printf("%d ",ptr->size);
+        printf("%c\n",ptr->value);
+        ptr = ptr->next;
     }
 }
