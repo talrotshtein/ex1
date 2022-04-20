@@ -58,6 +58,7 @@ bool basicTest(){
     bool result=true;
     ASSERT_TEST(list != NULL, destroy);
 
+
     //adding elements to the list
     ASSERT_TEST(RLEListAppend(list, 'a') == RLE_LIST_SUCCESS, destroy);    // a
     ASSERT_TEST(RLEListAppend(list, 'a') == RLE_LIST_SUCCESS, destroy);    // ac
@@ -66,15 +67,19 @@ bool basicTest(){
     ASSERT_TEST(RLEListAppend(list, 'a') == RLE_LIST_SUCCESS, destroy);    // acbab
     ASSERT_TEST(RLEListAppend(list, 'a') == RLE_LIST_SUCCESS, destroy);    // acbaba
     ASSERT_TEST(RLEListAppend(list, 'a') == RLE_LIST_SUCCESS, destroy);    // acbabab
-    ASSERT_TEST(RLEListAppend(list, 'b') == RLE_LIST_SUCCESS, destroy);    // acbababa
+    ASSERT_TEST(RLEListAppend(list, 'a') == RLE_LIST_SUCCESS, destroy);    // acbababa
     ASSERT_TEST(RLEListAppend(list, 'a') == RLE_LIST_SUCCESS, destroy);    // acbababaa
+    ASSERT_TEST(RLEListAppend(list, 'a') == RLE_LIST_SUCCESS, destroy);    // acbababaaa
     ASSERT_TEST(RLEListAppend(list, 'b') == RLE_LIST_SUCCESS, destroy);    // acbababaaa
-    tempPrintList(list);
-    ASSERT_TEST(RLEListRemove(list, 9) == RLE_LIST_SUCCESS, destroy); // abababaaa
-    tempPrintList(list);
-    ASSERT_TEST(RLEListRemove(list, 7) == RLE_LIST_SUCCESS, destroy); // abababaaa
-    tempPrintList(list);
+    //ASSERT_TEST(RLEListRemove(list, 9) == RLE_LIST_SUCCESS, destroy); // abababaaa
+
+
     // check if the represented string is "abababaaa"
+    char* string = RLEListExportToString(list,NULL);
+    for(int i =0;string[i]!='\0';i++)
+    {
+        printf("%c",string[i]);
+    }
     const char *s = "aaaaaaaa";
     char it;
     for(int i=0; i<RLEListSize(list); i++)
@@ -85,6 +90,7 @@ bool basicTest(){
     //check if the length's are equal
     ASSERT_TEST(RLEListSize(list)==strlen(s), destroy);
     destroy:
+
     RLEListDestroy(list);
     return result;
 }

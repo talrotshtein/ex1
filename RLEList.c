@@ -4,6 +4,7 @@
 
 #define CELL_OF_NUMBER 2
 #define NUM_OF_DIGITS 10
+#define ZERO_IN_ASCII 48
 
 struct RLEList_t {
     int size;
@@ -230,7 +231,7 @@ RLEListResult RLEListMap(RLEList list, MapFunction map_function)
 
 int RLEStringLength(RLEList list)
 {
-    int length;
+    int length=0;
     if(!list->next)
     {
         return CELL_OF_NUMBER+ GetDigits(list);
@@ -298,12 +299,15 @@ int GetDigits (RLEList list)
 
 void PutValuesInString(RLEList list,char* array)
 {
-    int i = CELL_OF_NUMBER;
+    int i =0;
     int tmp = list->size;
     *(array) = list->value;
     while(tmp)
     {
-        *(array+ GetDigits(list)-i) = tmp%NUM_OF_DIGITS;
+        int a = ZERO_IN_ASCII+tmp%NUM_OF_DIGITS;
+        char b;
+        b= (char)a;
+        *(array+ GetDigits(list)-i) = b;
         tmp = tmp/NUM_OF_DIGITS;
         i++;
     }
