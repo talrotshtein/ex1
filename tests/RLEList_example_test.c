@@ -63,17 +63,19 @@ bool basicTest(){
     ASSERT_TEST(RLEListAppend(list, 'a') == RLE_LIST_SUCCESS, destroy);    // ac
     ASSERT_TEST(RLEListAppend(list, 'a') == RLE_LIST_SUCCESS, destroy);    // acb
     ASSERT_TEST(RLEListAppend(list, 'a') == RLE_LIST_SUCCESS, destroy);    // acba
-    ASSERT_TEST(RLEListAppend(list, 'c') == RLE_LIST_SUCCESS, destroy);    // acbab
+    ASSERT_TEST(RLEListAppend(list, 'a') == RLE_LIST_SUCCESS, destroy);    // acbab
     ASSERT_TEST(RLEListAppend(list, 'a') == RLE_LIST_SUCCESS, destroy);    // acbaba
     ASSERT_TEST(RLEListAppend(list, 'a') == RLE_LIST_SUCCESS, destroy);    // acbabab
-    ASSERT_TEST(RLEListAppend(list, 'a') == RLE_LIST_SUCCESS, destroy);    // acbababa
+    ASSERT_TEST(RLEListAppend(list, 'b') == RLE_LIST_SUCCESS, destroy);    // acbababa
     ASSERT_TEST(RLEListAppend(list, 'a') == RLE_LIST_SUCCESS, destroy);    // acbababaa
     ASSERT_TEST(RLEListAppend(list, 'b') == RLE_LIST_SUCCESS, destroy);    // acbababaaa
     tempPrintList(list);
-    ASSERT_TEST(RLEListRemove(list, 4) == RLE_LIST_SUCCESS, destroy); // abababaaa
+    ASSERT_TEST(RLEListRemove(list, 9) == RLE_LIST_SUCCESS, destroy); // abababaaa
     tempPrintList(list);
-    // check if the represented string is "aaaaaaaab"
-    const char *s = "aaaaaaaab";
+    ASSERT_TEST(RLEListRemove(list, 7) == RLE_LIST_SUCCESS, destroy); // abababaaa
+    tempPrintList(list);
+    // check if the represented string is "abababaaa"
+    const char *s = "aaaaaaaa";
     char it;
     for(int i=0; i<RLEListSize(list); i++)
     {

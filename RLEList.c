@@ -245,6 +245,10 @@ char* RLEListExportToString(RLEList list, RLEListResult* result)
     int length =0;
     if(!real_list)
     {
+        if(result == NULL)
+        {
+            return NULL;
+        }
         *result = RLE_LIST_NULL_ARGUMENT;
         return NULL;
     }
@@ -252,11 +256,18 @@ char* RLEListExportToString(RLEList list, RLEListResult* result)
     char* exported = malloc(sizeof(char)*length);
     if(!exported)
     {
+        if(result == NULL)
+        {
+            return NULL;
+        }
         *result = RLE_LIST_NULL_ARGUMENT;
         return NULL;
     }
     MakeString(real_list,exported);
-    *result = RLE_LIST_SUCCESS;
+    if(result != NULL)
+    {
+        *result = RLE_LIST_SUCCESS;
+    }
     return exported;
 }
 
