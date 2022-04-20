@@ -45,7 +45,13 @@ RLEListResult RLEListAppend(RLEList list, char value)
     {
         ptr = ptr->next;
     }
-    if(ptr->value == value)
+    if(ptr->value == '\0' && ptr->size == 0)
+    {
+        ptr->size = 1;
+        ptr->value = value;
+        return RLE_LIST_SUCCESS;
+    }
+    else if(ptr->value == value)
     {
         ptr->size = ptr->size + 1;
         return RLE_LIST_SUCCESS;
@@ -71,10 +77,19 @@ int RLEListSize(RLEList list)
         return -1;
     }
     int size_sum = 0;
-    for(RLEList ptr = list; ptr != NULL; ptr = ptr->next)
+    RLEList ptr = list;
+    while(ptr != NULL)
+    {
+        size_sum = size_sum + ptr->size;
+        ptr = ptr->next;
+    }
+    /*for(RLEList ptr = list; ptr != NULL; ptr = ptr->next)
     {
         size_sum += ptr->size;
     }
+     */
+
+    printf("%d\n",size_sum);
     return size_sum;
 }
 

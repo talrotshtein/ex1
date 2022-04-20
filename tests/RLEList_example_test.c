@@ -82,7 +82,6 @@ bool basicTest(){
     }
     //check if the length's are equal
     ASSERT_TEST(RLEListSize(list)==strlen(s), destroy);
-    
     destroy:
     RLEListDestroy(list);
     return result;
