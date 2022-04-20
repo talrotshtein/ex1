@@ -186,3 +186,5 @@ void PutValuesInString(RLEList list,char* array);
 void tempPrintList(RLEList list);
 
 RLEList getNode(RLEList list, int index);
+
+void mergeNodes(RLEList list);

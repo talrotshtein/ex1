@@ -112,6 +112,11 @@ RLEListResult RLEListRemove(RLEList list, int index)
             temp = realList;
             list->next = realList->next;
             free(temp);
+            realList = list->next;
+            if(realList->next != NULL && realList->value == realList->next->value)
+            {
+                mergeNodes(realList);
+            }
         }
         return RLE_LIST_SUCCESS;
     }
@@ -136,6 +141,10 @@ RLEListResult RLEListRemove(RLEList list, int index)
                     free(ptr);
                     RLEList temp2 = getNode(realList, count-1);
                     temp2->next = temp;
+                    if(temp!=NULL && temp2->value == temp->value)
+                    {
+                        mergeNodes(temp2);
+                    }
                 }
             }
             else
@@ -148,6 +157,14 @@ RLEListResult RLEListRemove(RLEList list, int index)
         count++;
     }
     return RLE_LIST_ERROR;
+}
+
+void mergeNodes(RLEList list)
+{
+    list->size = list->size + list->next->size;
+    RLEList temp = list->next;
+    list->next = list->next->next;
+    free(temp);
 }
 
 RLEList getNode(RLEList list, int index)
