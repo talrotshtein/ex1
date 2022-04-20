@@ -70,9 +70,9 @@ bool basicTest(){
     ASSERT_TEST(RLEListAppend(list, 'a') == RLE_LIST_SUCCESS, destroy);    // acbababaa
     ASSERT_TEST(RLEListAppend(list, 'b') == RLE_LIST_SUCCESS, destroy);    // acbababaaa
 
-    ASSERT_TEST(RLEListRemove(list, 4) == RLE_LIST_SUCCESS, destroy); // abababaaa
+    ASSERT_TEST(RLEListRemove(list, 9) == RLE_LIST_SUCCESS, destroy); // abababaaa
     // check if the represented string is "abababaaa"
-    const char *s = "aaaaaaaab";
+    const char *s = "aaaaaaaaa";
     char it;
     for(int i=0; i<RLEListSize(list); i++)
     {
