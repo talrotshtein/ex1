@@ -219,7 +219,19 @@ char RLEListGet(RLEList list, int index, RLEListResult *result)
 RLEListResult RLEListMap(RLEList list, MapFunction map_function)
 {
     RLEList real_list = list->next;
-    return aux_RLEListMap(real_list,map_function);
+    RLEListResult map_result =  aux_RLEListMap(real_list,map_function);
+    RLEList ptr = real_list;
+    while(ptr->next != NULL)
+    {
+        if(ptr->value == ptr->next->value)
+        {
+            mergeNodes(ptr);
+            ptr = real_list;
+        }
+        else
+            ptr = ptr->next;
+    }
+    return map_result;
 }
 
 int RLEStringLength(RLEList list)
