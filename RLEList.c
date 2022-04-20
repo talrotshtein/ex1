@@ -200,13 +200,14 @@ char RLEListGet(RLEList list, int index, RLEListResult *result)
 
 RLEListResult RLEListMap(RLEList list, MapFunction map_function)
 {
+    RLEList real_list = list->next;
     RLEListResult status = RLE_LIST_SUCCESS;
-    if (!list)
+    if (!real_list)
     {
         return RLE_LIST_NULL_ARGUMENT;
     }
-    status = RLEListMap(list->next,map_function);
-    list->value = map_function(list->value);
+    status = RLEListMap(real_list->next,map_function);
+    real_list->value = map_function(real_list->value);
     return RLE_LIST_SUCCESS;
 }
 
@@ -223,20 +224,21 @@ int RLEStringLength(RLEList list)
 
 char* RLEListExportToString(RLEList list, RLEListResult* result)
 {
+    RLEList real_list = list->next;
     int length =0;
-    if(!list)
+    if(!real_list)
     {
         *result = RLE_LIST_NULL_ARGUMENT;
         return NULL;
     }
-    length = RLEStringLength(list);
+    length = RLEStringLength(real_list);
     char* exported = malloc(sizeof(char)*length);
     if(!exported)
     {
         *result = RLE_LIST_NULL_ARGUMENT;
         return NULL;
     }
-    MakeString(list,exported);
+    MakeString(real_list,exported);
     *result = RLE_LIST_SUCCESS;
     return exported;
 }
