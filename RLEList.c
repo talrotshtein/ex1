@@ -6,6 +6,47 @@
 #define NUM_OF_DIGITS 10
 #define ZERO_IN_ASCII 48
 
+/**
+ * this function counts the number of digits in the struct length parameter.
+ * this function was made by Shahar.
+ * @param list
+ * @return
+ */
+static int GetDigits (RLEList list);
+
+/**
+ * this function gets the length of the string for the function RLEListExportToString
+ * this function was made by Shahar
+ * @param list
+ * @return
+ */
+static int RLEStringLength(RLEList list);
+
+/**
+ * this function is creating the string by recursion
+ * this function was made by Shahar
+ * @param list
+ * @param array
+ * @param length
+ * @return
+ */
+static void MakeString (RLEList list,char* array);
+
+/**
+ * this function puts the letter and the number inside the string.
+ * this function was made by Shahar.
+ * @param list
+ */
+static void PutValuesInString(RLEList list,char* array);
+
+static RLEList getNode(RLEList list, int index);
+
+static void mergeNodes(RLEList list);
+
+static RLEListResult aux_RLEListMap(RLEList list, MapFunction map_function);
+
+
+
 struct RLEList_t {
     int size;
     char value;
@@ -160,7 +201,7 @@ RLEListResult RLEListRemove(RLEList list, int index)
     return RLE_LIST_ERROR;
 }
 
-void mergeNodes(RLEList list)
+static void mergeNodes(RLEList list)
 {
     list->size = list->size + list->next->size;
     RLEList temp = list->next;
@@ -168,7 +209,7 @@ void mergeNodes(RLEList list)
     free(temp);
 }
 
-RLEList getNode(RLEList list, int index)
+static RLEList getNode(RLEList list, int index)
 {
     RLEList ptr = list;
     int i=0;
@@ -234,7 +275,7 @@ RLEListResult RLEListMap(RLEList list, MapFunction map_function)
     return map_result;
 }
 
-int RLEStringLength(RLEList list)
+static int RLEStringLength(RLEList list)
 {
     int length=0;
     if(!list->next)
@@ -277,7 +318,7 @@ char* RLEListExportToString(RLEList list, RLEListResult* result)
     return exported;
 }
 
-void MakeString (RLEList list,char* array)
+static void MakeString (RLEList list,char* array)
 {
     if(!list->next)
     {
@@ -290,7 +331,7 @@ void MakeString (RLEList list,char* array)
     array[CELL_OF_NUMBER+ GetDigits(list)-1] = '\n';
 }
 
-int GetDigits (RLEList list)
+static int GetDigits (RLEList list)
 {
     int counter=0;
     int tmp = list->size;
@@ -302,7 +343,7 @@ int GetDigits (RLEList list)
     return counter;
 }
 
-void PutValuesInString(RLEList list,char* array)
+static void PutValuesInString(RLEList list,char* array)
 {
     int i =0;
     int tmp = list->size;
@@ -318,7 +359,7 @@ void PutValuesInString(RLEList list,char* array)
     }
 }
 
-void tempPrintList(RLEList list)
+static void tempPrintList(RLEList list)
 {
     RLEList ptr = list;
     while (ptr != NULL)
@@ -329,7 +370,7 @@ void tempPrintList(RLEList list)
     }
 }
 
-RLEListResult aux_RLEListMap(RLEList list, MapFunction map_function)
+static RLEListResult aux_RLEListMap(RLEList list, MapFunction map_function)
 {
     RLEListResult status = RLE_LIST_SUCCESS;
     if (!list)

@@ -82,10 +82,9 @@ bool basicTest(){
     ASSERT_TEST(RLEListAppend(list, 'c') == RLE_LIST_SUCCESS, destroy);    // acbababaa
     ASSERT_TEST(RLEListAppend(list, 'a') == RLE_LIST_SUCCESS, destroy);    // acbababaaa
     ASSERT_TEST(RLEListAppend(list, 'c') == RLE_LIST_SUCCESS, destroy);    // acbababaaa
-    //ASSERT_TEST(RLEListRemove(list, 9) == RLE_LIST_SUCCESS, destroy); // abababaaa
+    ASSERT_TEST(RLEListRemove(list, 9) == RLE_LIST_SUCCESS, destroy); // abababaaa
     RLEListResult res = RLE_LIST_SUCCESS;
     res = RLEListMap( list, mapFunc1);
-    tempPrintList(list);
     // check if the represented string is "abababaaa"
     char* string = RLEListExportToString(list,NULL);
     for(int i =0;string[i]!='\0';i++)
