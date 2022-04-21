@@ -167,8 +167,8 @@ int RLEStringLength(RLEList list);
  * @param length
  * @return
  */
-
 void MakeString (RLEList list,char* array);
+
 /**
  * this function counts the number of digits in the struct length parameter.
  * this function was made by Shahar.
