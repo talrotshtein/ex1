@@ -2,7 +2,7 @@
 // Created by Tal on 4/21/2022.
 //
 
-#include "AsciiArtTool.h"
+#include "tool/AsciiArtTool.h"
 #include <stdio.h>
 
 void error(char* message, char* filename);

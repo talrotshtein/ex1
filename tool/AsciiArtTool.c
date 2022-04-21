@@ -3,6 +3,7 @@
 //
 #include "AsciiArtTool.h"
 #include <stdio.h>
+#include <string.h>
 
 struct RLEList_t {
     int size;
@@ -52,7 +53,7 @@ RLEListResult asciiArtPrintEncoded(RLEList list, FILE *out_stream)
     }
     RLEList real_list = list->next;
     char* encoded = RLEListExportToString(list, NULL);
-    for(int i=0; i < RLEStringLength(real_list); i++)
+    for(int i=0; i < strlen(encoded); i++)
     {
         fprintf(out_stream, "%c", encoded[i]);
     }
