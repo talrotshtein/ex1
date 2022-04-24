@@ -1,3 +1,4 @@
+//#include "/home/mtm/public/2122b/ex1/RLEList.h"
 #include "RLEList.h"
 #include <stdio.h>
 #include <stdlib.h>
@@ -359,25 +360,13 @@ static void PutValuesInString(RLEList list,char* array)
     }
 }
 
-static void tempPrintList(RLEList list)
-{
-    RLEList ptr = list;
-    while (ptr != NULL)
-    {
-        printf("%d ",ptr->size);
-        printf("%c\n",ptr->value);
-        ptr = ptr->next;
-    }
-}
-
 static RLEListResult aux_RLEListMap(RLEList list, MapFunction map_function)
 {
-    RLEListResult status = RLE_LIST_SUCCESS;
     if (!list)
     {
         return RLE_LIST_NULL_ARGUMENT;
     }
-    status = aux_RLEListMap(list->next,map_function);
+    aux_RLEListMap(list->next,map_function);
     list->value = map_function(list->value);
     return RLE_LIST_SUCCESS;
 }

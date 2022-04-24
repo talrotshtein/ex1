@@ -2,7 +2,7 @@
 // Created by Tal on 4/21/2022.
 //
 
-#include "tool/AsciiArtTool.h"
+#include "AsciiArtTool.h"
 #include <stdio.h>
 
 void error(char* message, char* filename);
@@ -21,12 +21,14 @@ int main(int argc, char** argv)
     if (!source)
     {
         error("Error: cannot open ", argv[2]);
+        return 0;
     }
     FILE* target = initTargetFile(argc, argv);
     if (!target)
     {
         fclose(source);
         error("Error: cannot open ", argv[3]);
+        return 0;
     }
     RLEListResult result = RLE_LIST_SUCCESS;
     RLEList encodedList = asciiArtRead(source);
