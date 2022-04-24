@@ -1,5 +1,5 @@
-//#include "RLEList.h"
-#include "/home/mtm/public/2122b/ex1/RLEList.h"
+#include "RLEList.h"
+//#include "/home/mtm/public/2122b/ex1/RLEList.h"
 #include <stdio.h>
 #include <stdlib.h>
 
@@ -7,6 +7,8 @@
 #define NUM_OF_DIGITS 10
 #define ZERO_IN_ASCII 48
 
+
+static RLEList RLEListAdd();
 /**
  * this function counts the number of digits in the struct length parameter.
  * this function was made by Shahar.
@@ -60,6 +62,8 @@ RLEList RLEListCreate()
         RLEList ptr = malloc(sizeof(*ptr));
         RLEList realPtr =  malloc(sizeof(*realPtr));
         if (!ptr || !realPtr) {
+            free(ptr);
+            free(realPtr);
             return NULL;
         }
         ptr->size = 0;
@@ -105,7 +109,7 @@ RLEListResult RLEListAppend(RLEList list, char value)
     }
     else
     {
-        RLEList newList = RLEListCreate();
+        RLEList newList = RLEListAdd();
         if (newList == NULL) {
             return RLE_LIST_OUT_OF_MEMORY;
         }
@@ -370,4 +374,16 @@ static RLEListResult aux_RLEListMap(RLEList list, MapFunction map_function)
     aux_RLEListMap(list->next,map_function);
     list->value = map_function(list->value);
     return RLE_LIST_SUCCESS;
+}
+
+static RLEList RLEListAdd()
+{
+    RLEList ptr = malloc(sizeof(*ptr));
+    if (!ptr) {
+        return NULL;
+    }
+    ptr->size = 0;
+    ptr->value = '\0';
+    ptr->next = NULL;
+    return ptr;
 }
