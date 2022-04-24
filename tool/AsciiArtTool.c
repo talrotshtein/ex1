@@ -1,9 +1,11 @@
 //
 // Created by Tal on 4/21/2022.
 //
+#include "/home/mtm/public/2122b/ex1/RLEList.h"
 #include "AsciiArtTool.h"
 #include <stdio.h>
 #include <string.h>
+#include <stdlib.h>
 
 struct RLEList_t {
     int size;
@@ -34,9 +36,10 @@ RLEListResult asciiArtPrint(RLEList list, FILE *out_stream)
         return RLE_LIST_NULL_ARGUMENT;
     }
     RLEList real_list = list->next;
+    int i=0;
     while(real_list)
     {
-        for(int i=0;i<real_list->size;i++)
+        for(i=0;i<real_list->size;i++)
         {
             fprintf(out_stream, "%c",real_list->value);
         }
@@ -51,9 +54,9 @@ RLEListResult asciiArtPrintEncoded(RLEList list, FILE *out_stream)
     {
         return RLE_LIST_NULL_ARGUMENT;
     }
-    RLEList real_list = list->next;
     char* encoded = RLEListExportToString(list, NULL);
-    for(int i=0; i < strlen(encoded); i++)
+    int i=0;
+    for(i=0; i < strlen(encoded); i++)
     {
         fprintf(out_stream, "%c", encoded[i]);
     }
