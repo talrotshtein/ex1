@@ -51,6 +51,7 @@ int main(int argc, char** argv)
     {
         fclose(target);
     }
+
     RLEListDestroy(encodedList);
     return 0;
 }

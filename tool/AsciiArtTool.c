@@ -57,5 +57,6 @@ RLEListResult asciiArtPrintEncoded(RLEList list, FILE *out_stream)
     {
         fprintf(out_stream, "%c", encoded[i]);
     }
+    free(encoded);
     return RLE_LIST_SUCCESS;
 }
