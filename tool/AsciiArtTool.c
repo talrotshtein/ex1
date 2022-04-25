@@ -21,7 +21,7 @@ RLEList asciiArtRead(FILE* in_stream)
     }
     RLEList list = RLEListCreate();
     char value;
-    while(fscanf(in_stream, "%c", &value) == 1 && value != '\0')
+    while(fscanf(in_stream, "%c", &value) == 1 && value != EOF)
     {
         RLEListAppend(list, value);
     }
