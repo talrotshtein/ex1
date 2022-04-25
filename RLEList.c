@@ -328,7 +328,7 @@ static void MakeString (RLEList list,char* array)
     if(!list->next)
     {
         PutValuesInString(list,array);
-        array[CELL_OF_NUMBER+ GetDigits(list)-1] = '\0';
+        array[CELL_OF_NUMBER+ GetDigits(list)-1] = '\n';
         return;
     }
     MakeString(list->next,array+CELL_OF_NUMBER+GetDigits(list));
