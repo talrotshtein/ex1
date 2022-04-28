@@ -1,18 +1,18 @@
 //
 // Created by Tal on 4/21/2022.
 //
+#include "/home/mtm/public/2122b/ex1/RLEList.h"
+//#include "RLEList.h"
 #include "AsciiArtTool.h"
-//#include "/home/mtm/public/2122b/ex1/RLEList.h"
-#include "RLEList.h"
 #include <stdio.h>
 #include <string.h>
+#include <stdlib.h>
 
 struct RLEList_t {
     int size;
     char value;
     struct RLEList_t* next;
 };
-
 
 RLEList asciiArtRead(FILE* in_stream)
 {
@@ -22,7 +22,7 @@ RLEList asciiArtRead(FILE* in_stream)
     }
     RLEList list = RLEListCreate();
     char value;
-    while(fscanf(in_stream, "%c", &value) == 1 && value != '\0')
+    while(fscanf(in_stream, "%c", &value) == 1 && value != EOF)
     {
         RLEListAppend(list, value);
     }
@@ -40,7 +40,6 @@ RLEListResult asciiArtPrint(RLEList list, FILE *out_stream)
     int i=0;
     while(real_list)
     {
-
         for(i=0;i<real_list->size;i++)
         {
             fprintf(out_stream, "%c",real_list->value);

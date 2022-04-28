@@ -56,7 +56,7 @@ int main(int argc, char **argv)
 char mapFunc1(char letter)
 {
     char let = letter;
-    if(letter == 'a')
+    if(letter == 'd')
     {
         let= 'c';
     }
@@ -71,37 +71,48 @@ bool basicTest(){
 
 
     //adding elements to the list
-    ASSERT_TEST(RLEListAppend(list, 'c') == RLE_LIST_SUCCESS, destroy);    // a
-    ASSERT_TEST(RLEListAppend(list, 'c') == RLE_LIST_SUCCESS, destroy);    // ac
-    ASSERT_TEST(RLEListAppend(list, 'c') == RLE_LIST_SUCCESS, destroy);    // acb
-    ASSERT_TEST(RLEListAppend(list, 'c') == RLE_LIST_SUCCESS, destroy);    // acba
-    ASSERT_TEST(RLEListAppend(list, 'c') == RLE_LIST_SUCCESS, destroy);    // acbab
-    ASSERT_TEST(RLEListAppend(list, 'a') == RLE_LIST_SUCCESS, destroy);    // acbaba
-    ASSERT_TEST(RLEListAppend(list, 'c') == RLE_LIST_SUCCESS, destroy);    // acbabab
-    ASSERT_TEST(RLEListAppend(list, 'd') == RLE_LIST_SUCCESS, destroy);    // acbababa
-    ASSERT_TEST(RLEListAppend(list, 'c') == RLE_LIST_SUCCESS, destroy);    // acbababaa
+    ASSERT_TEST(RLEListAppend(list, 'A') == RLE_LIST_SUCCESS, destroy);    // a
+    ASSERT_TEST(RLEListAppend(list, 'B') == RLE_LIST_SUCCESS, destroy);    // ac
+    ASSERT_TEST(RLEListAppend(list, 'B') == RLE_LIST_SUCCESS, destroy);    // acb
+    ASSERT_TEST(RLEListAppend(list, 'a') == RLE_LIST_SUCCESS, destroy);    // acba
+    ASSERT_TEST(RLEListAppend(list, 'b') == RLE_LIST_SUCCESS, destroy);    // acbab
+    ASSERT_TEST(RLEListAppend(list, 'b') == RLE_LIST_SUCCESS, destroy);    // acbaba
+    ASSERT_TEST(RLEListAppend(list, '-') == RLE_LIST_SUCCESS, destroy);    // acbabab
+    ASSERT_TEST(RLEListAppend(list, '-') == RLE_LIST_SUCCESS, destroy);    // acbababa
+    ASSERT_TEST(RLEListAppend(list, '-') == RLE_LIST_SUCCESS, destroy);    // acbababaa
+    ASSERT_TEST(RLEListAppend(list, '-') == RLE_LIST_SUCCESS, destroy);    // acbababaaa
+    ASSERT_TEST(RLEListAppend(list, '-') == RLE_LIST_SUCCESS, destroy);    // acbababaaa
+    ASSERT_TEST(RLEListAppend(list, '-') == RLE_LIST_SUCCESS, destroy);    // acbababaaa
+    ASSERT_TEST(RLEListAppend(list, '-') == RLE_LIST_SUCCESS, destroy);    // acbababaaa
+    ASSERT_TEST(RLEListAppend(list, '-') == RLE_LIST_SUCCESS, destroy);    // acbababaaa
+    ASSERT_TEST(RLEListAppend(list, '-') == RLE_LIST_SUCCESS, destroy);    // acbababaaa
+    ASSERT_TEST(RLEListAppend(list, '-') == RLE_LIST_SUCCESS, destroy);    // acbababaaa
+    ASSERT_TEST(RLEListAppend(list, '-') == RLE_LIST_SUCCESS, destroy);    // acbababaaa
+    ASSERT_TEST(RLEListAppend(list, '-') == RLE_LIST_SUCCESS, destroy);    // acbababaaa
+    ASSERT_TEST(RLEListAppend(list, '\n') == RLE_LIST_SUCCESS, destroy);    // acbababaaa
+    ASSERT_TEST(RLEListAppend(list, '\n') == RLE_LIST_SUCCESS, destroy);    // acbababaaa
     ASSERT_TEST(RLEListAppend(list, 'a') == RLE_LIST_SUCCESS, destroy);    // acbababaaa
-    ASSERT_TEST(RLEListAppend(list, 'c') == RLE_LIST_SUCCESS, destroy);    // acbababaaa
-    ASSERT_TEST(RLEListRemove(list, 9) == RLE_LIST_SUCCESS, destroy); // abababaaa
     RLEListResult res = RLE_LIST_SUCCESS;
     res = RLEListMap( list, mapFunc1);
-    // check if the represented string is "abababaaa"
+    // check if the represented string is ""A1\nB2\na1\nb2\n-12\n\n2\na1\n""
+    char *expected = "A1\nB2\na1\nb2\n-12\n\n2\na1\n";
     char* string = RLEListExportToString(list,NULL);
-    for(int i =0;string[i]!='\0';i++)
+    for(int i =0;i<=strlen(string);i++)
     {
-        printf("%c",string[i]);
+        if(string[i]!=expected[i])
+            printf("%d", i);
     }
-    const char *s = "aaaaaaaa";
+    /*const char *s = "aaaaaaaa";
     char it;
     for(int i=0; i<RLEListSize(list); i++)
     {
         it=RLEListGet(list, i, NULL);
-        ASSERT_TEST(it == s[i++], destroy);
+        ASSERT_TEST(it == s[i], destroy);
     }
     //check if the length's are equal
     ASSERT_TEST(RLEListSize(list)==strlen(s), destroy);
+     */
     destroy:
-
     RLEListDestroy(list);
     return result;
 }

@@ -32,7 +32,8 @@
 typedef struct RLEList_t *RLEList;
 
 /** Enum used for returning error codes from RLE list functions */
-typedef enum {
+typedef enum
+{
     RLE_LIST_SUCCESS,
     RLE_LIST_OUT_OF_MEMORY,
     RLE_LIST_NULL_ARGUMENT,
