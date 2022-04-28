@@ -15,7 +15,7 @@ int main(int argc, char** argv)
 {
     if(argc != 4)
     {
-        error("Usage: copy <file1> <file2>", NULL);
+        //error("Usage: copy <file1> <file2>", NULL);
         return 0;
     }
     FILE* source = initSourceFile(argc, argv);
