@@ -51,7 +51,7 @@ static void mergeNodes(RLEList list);
 static RLEListResult aux_RLEListMap(RLEList list, MapFunction map_function);
 
 
-struct RLEList_t {
+struct RLEList_t{
     int size;
     char value;
     struct RLEList_t *next;
@@ -59,10 +59,12 @@ struct RLEList_t {
 
 //implement the functions here
 //test
-RLEList RLEListCreate() {
+RLEList RLEListCreate()
+{
     RLEList ptr = malloc(sizeof(*ptr));
     RLEList realPtr = malloc(sizeof(*realPtr));
-    if (!ptr || !realPtr) {
+    if (!ptr || !realPtr)
+    {
         free(ptr);
         free(realPtr);
         return NULL;
@@ -76,8 +78,10 @@ RLEList RLEListCreate() {
     return ptr;
 }
 
-void RLEListDestroy(RLEList list) {
-    if (!list) {
+void RLEListDestroy(RLEList list)
+{
+    if (!list)
+    {
         return;
     }
     RLEListDestroy(list->next);
@@ -86,24 +90,33 @@ void RLEListDestroy(RLEList list) {
 
 // hey tal you are doing funcs 3-6 so implement them between my
 // funcs 'so it is the same order they wrote it.
-RLEListResult RLEListAppend(RLEList list, char value) {
-    if (list == NULL) {
+RLEListResult RLEListAppend(RLEList list, char value)
+{
+    if (list == NULL)
+    {
         return RLE_LIST_NULL_ARGUMENT;
     }
     RLEList ptr = list;
-    while (ptr->next != NULL) {
+    while (ptr->next != NULL)
+    {
         ptr = ptr->next;
     }
-    if (ptr->value == '\0' && ptr->size == 0) {
+    if (ptr->value == '\0' && ptr->size == 0)
+    {
         ptr->size = 1;
         ptr->value = value;
         return RLE_LIST_SUCCESS;
-    } else if (ptr->value == value) {
+    }
+    else if (ptr->value == value)
+    {
         ptr->size = ptr->size + 1;
         return RLE_LIST_SUCCESS;
-    } else {
+    }
+    else
+    {
         RLEList newList = RLEListAdd();
-        if (newList == NULL) {
+        if (newList == NULL)
+        {
             return RLE_LIST_OUT_OF_MEMORY;
         }
         newList->value = value;
@@ -114,34 +127,44 @@ RLEListResult RLEListAppend(RLEList list, char value) {
     }
 }
 
-int RLEListSize(RLEList list) {
-    if (list == NULL) {
+int RLEListSize(RLEList list)
+{
+    if (list == NULL)
+    {
         return -1;
     }
     int size_sum = 0;
     RLEList ptr = list->next;
-    while (ptr != NULL) {
+    while (ptr != NULL)
+    {
         size_sum = size_sum + ptr->size;
         ptr = ptr->next;
     }
     return size_sum;
 }
 
-RLEListResult RLEListRemove(RLEList list, int index) {
-    if (list == NULL) {
+RLEListResult RLEListRemove(RLEList list, int index)
+{
+    if (list == NULL)
+    {
         return RLE_LIST_NULL_ARGUMENT;
     }
-    if (index < 0 || RLEListSize(list) <= index) {
+    if (index < 0 || RLEListSize(list) <= index)
+    {
         return RLE_LIST_INDEX_OUT_OF_BOUNDS;
     }
     RLEList temp, realList = list->next;
     if (realList == NULL)
         return RLE_LIST_ERROR;
-    if (index == 0) {
-        if (realList->size > 1) {
+    if (index == 0)
+    {
+        if (realList->size > 1)
+        {
             realList->size = realList->size - 1;
             return RLE_LIST_SUCCESS;
-        } else {
+        }
+        else
+        {
             list->next = realList->next;
             realList->next = NULL;
             free(realList);
@@ -156,27 +179,34 @@ RLEListResult RLEListRemove(RLEList list, int index) {
     }
     RLEList ptr = realList;
     int i = 0;
-    while (ptr != NULL) {
+    while (ptr != NULL)
+    {
         i += ptr->size;
-        if (i >= index + 1) {
-            if (ptr->size == 1) {
-                if (ptr->next == NULL) {
+        if (i >= index + 1)
+        {
+            if (ptr->size == 1)
+            {
+                if (ptr->next == NULL)
+                {
                     temp = getPrev(list, ptr);
                     free(ptr);
                     temp->next = NULL;
                     return RLE_LIST_SUCCESS;
                 }
-                else {
+                else
+                {
                     temp = getPrev(list, ptr);
                     temp->next = ptr->next;
                     ptr->next = NULL;
                     free(ptr);
-                    if (temp->value == temp->next->value) {
+                    if (temp->value == temp->next->value)
+                    {
                         mergeNodes(temp);
-                }
+                    }
                 }
             }
-            else {
+            else
+            {
                 ptr->size = ptr->size - 1;
             }
             return RLE_LIST_SUCCESS;
@@ -186,40 +216,51 @@ RLEListResult RLEListRemove(RLEList list, int index) {
     return RLE_LIST_ERROR;
 }
 
-static void mergeNodes(RLEList list) {
+static void mergeNodes(RLEList list)
+{
     list->size = list->size + list->next->size;
     RLEList temp = list->next;
     list->next = list->next->next;
     free(temp);
 }
 
-static RLEList getPrev(RLEList list, RLEList toFind) {
+static RLEList getPrev(RLEList list, RLEList toFind)
+{
     RLEList ptr = list;
-    while (ptr != NULL && ptr->next != toFind) {
+    while (ptr != NULL && ptr->next != toFind)
+    {
         ptr = ptr->next;
     }
     return ptr;
 }
 
-char RLEListGet(RLEList list, int index, RLEListResult *result) {
-    if (list == NULL) {
-        if (result != NULL) {
+char RLEListGet(RLEList list, int index, RLEListResult *result)
+{
+    if (list == NULL)
+    {
+        if (result != NULL)
+        {
             *result = RLE_LIST_NULL_ARGUMENT;
         }
         return 0;
     }
-    if (index < 0 || RLEListSize(list) <= index) {
-        if (result != NULL) {
+    if (index < 0 || RLEListSize(list) <= index)
+    {
+        if (result != NULL)
+        {
             *result = RLE_LIST_INDEX_OUT_OF_BOUNDS;
         }
         return 0;
     }
     RLEList ptr = list->next;
     int i = 0;
-    while (ptr != NULL) {
+    while (ptr != NULL)
+    {
         i += ptr->size;
-        if (i >= index + 1) {
-            if (result != NULL) {
+        if (i >= index + 1)
+        {
+            if (result != NULL)
+            {
                 *result = RLE_LIST_SUCCESS;
             }
             return ptr->value;
@@ -229,7 +270,8 @@ char RLEListGet(RLEList list, int index, RLEListResult *result) {
     return RLE_LIST_ERROR;
 }
 
-RLEListResult RLEListMap(RLEList list, MapFunction map_function) {
+RLEListResult RLEListMap(RLEList list, MapFunction map_function)
+{
     if (list == NULL|| map_function == NULL)
     {
         return RLE_LIST_NULL_ARGUMENT;
@@ -237,8 +279,10 @@ RLEListResult RLEListMap(RLEList list, MapFunction map_function) {
     RLEList real_list = list->next;
     RLEListResult map_result = aux_RLEListMap(real_list, map_function);
     RLEList ptr = real_list;
-    while (ptr->next != NULL) {
-        if (ptr->value == ptr->next->value) {
+    while (ptr->next != NULL)
+    {
+        if (ptr->value == ptr->next->value)
+        {
             mergeNodes(ptr);
             ptr = real_list;
         } else
@@ -247,16 +291,19 @@ RLEListResult RLEListMap(RLEList list, MapFunction map_function) {
     return map_result;
 }
 
-static int RLEStringLength(RLEList list) {
+static int RLEStringLength(RLEList list)
+{
     int length = 0;
-    if (!list->next) {
+    if (!list->next)
+    {
         return CELL_OF_NUMBER + GetDigits(list);
     }
     length = RLEStringLength(list->next);
     return length + CELL_OF_NUMBER + GetDigits(list);
 }
 
-char *RLEListExportToString(RLEList list, RLEListResult *result) {
+char *RLEListExportToString(RLEList list, RLEListResult *result)
+{
     if(list == NULL)
     {
         if(result != NULL)
@@ -267,30 +314,37 @@ char *RLEListExportToString(RLEList list, RLEListResult *result) {
     }
     RLEList real_list = list->next;
     int length = 0;
-    if (!real_list) {
-        if(result!=NULL) {
+    if (!real_list)
+    {
+        if(result!=NULL)
+        {
             *result = RLE_LIST_NULL_ARGUMENT;
         }
         return NULL;
     }
     length = RLEStringLength(real_list);
     char *exported = malloc(sizeof(char) * (length+1));
-    if (!exported) {
-        if (result != NULL) {
+    if (!exported)
+    {
+        if (result != NULL)
+        {
             *result = RLE_LIST_NULL_ARGUMENT;
         }
         return NULL;
     }
     MakeString(real_list, exported);
     exported[length]='\0';
-    if (result != NULL) {
+    if (result != NULL)
+    {
         *result = RLE_LIST_SUCCESS;
     }
     return exported;
 }
 
-static void MakeString(RLEList list, char *array) {
-    if (!list->next) {
+static void MakeString(RLEList list, char *array)
+{
+    if (!list->next)
+    {
         PutValuesInString(list, array);
         array[CELL_OF_END_NUMBER + GetDigits(list) - 2] = '\n';
         array[CELL_OF_END_NUMBER + GetDigits(list) - 1] = '\0';
@@ -301,21 +355,25 @@ static void MakeString(RLEList list, char *array) {
     array[CELL_OF_NUMBER + GetDigits(list) - 1] = '\n';
 }
 
-static int GetDigits(RLEList list) {
+static int GetDigits(RLEList list)
+{
     int counter = 0;
     int tmp = list->size;
-    while (tmp) {
+    while (tmp)
+    {
         counter++;
         tmp = tmp / NUM_OF_DIGITS;
     }
     return counter;
 }
 
-static void PutValuesInString(RLEList list, char *array) {
+static void PutValuesInString(RLEList list, char *array)
+{
     int i = 0;
     int tmp = list->size;
     *(array) = list->value;
-    while (tmp) {
+    while (tmp)
+    {
         int a = ZERO_IN_ASCII + tmp % NUM_OF_DIGITS;
         char b;
         b = (char) a;
@@ -326,8 +384,10 @@ static void PutValuesInString(RLEList list, char *array) {
 }
 
 
-static RLEListResult aux_RLEListMap(RLEList list, MapFunction map_function) {
-    if (!list) {
+static RLEListResult aux_RLEListMap(RLEList list, MapFunction map_function)
+{
+    if (!list)
+    {
         return RLE_LIST_NULL_ARGUMENT;
     }
     aux_RLEListMap(list->next, map_function);
@@ -335,9 +395,11 @@ static RLEListResult aux_RLEListMap(RLEList list, MapFunction map_function) {
     return RLE_LIST_SUCCESS;
 }
 
-static RLEList RLEListAdd() {
+static RLEList RLEListAdd()
+{
     RLEList ptr = malloc(sizeof(*ptr));
-    if (!ptr) {
+    if (!ptr)
+    {
         return NULL;
     }
     ptr->size = 0;

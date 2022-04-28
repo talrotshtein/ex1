@@ -70,21 +70,26 @@ char mapFunc(char value)
     return value;
 }
 
-FILE* initSourceFile(int argc, char** argv) {
-    if (argc < 2) {
+FILE* initSourceFile(int argc, char** argv)
+{
+    if (argc < 2)
+    {
         return stdin;
     }
     return fopen(argv[2], "r");
 }
 
-FILE* initTargetFile(int argc, char** argv) {
-    if (argc < 3) {
+FILE* initTargetFile(int argc, char** argv)
+{
+    if (argc < 3)
+    {
         return stdout;
     }
     return fopen(argv[3], "w");
 }
 
 
-void error(char* message, char* filename) {
+void error(char* message, char* filename)
+{
     printf("%s %s\n", message, filename ? filename : "");
 }
