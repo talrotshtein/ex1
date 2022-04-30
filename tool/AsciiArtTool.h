@@ -1,8 +1,7 @@
 //
 // Created by Tal on 4/21/2022.
 //
-//#include "RLEList.h"
-#include "/home/mtm/public/2122b/ex1/RLEList.h"
+#include "RLEList.h"
 #ifndef EX1_ASCIIARTTOOL_H
 #define EX1_ASCIIARTTOOL_H
 

@@ -6,10 +6,10 @@
 #include <stdio.h>
 #include <string.h>
 
-void error(char* message, char* filename);
-FILE* initSourceFile(int argc, char** argv);
-FILE* initTargetFile(int argc, char** argv);
-char mapFunc(char value);
+static void error(char* message, char* filename);
+static FILE* initSourceFile(int argc, char** argv);
+static FILE* initTargetFile(int argc, char** argv);
+static char mapFunc(char value);
 
 int main(int argc, char** argv)
 {
@@ -59,7 +59,7 @@ int main(int argc, char** argv)
     return 0;
 }
 
-char mapFunc(char value)
+static char mapFunc(char value)
 {
     if(value == '@')
     {
@@ -72,7 +72,7 @@ char mapFunc(char value)
     return value;
 }
 
-FILE* initSourceFile(int argc, char** argv)
+static FILE* initSourceFile(int argc, char** argv)
 {
     if (argc < 2)
     {
@@ -81,7 +81,7 @@ FILE* initSourceFile(int argc, char** argv)
     return fopen(argv[2], "r");
 }
 
-FILE* initTargetFile(int argc, char** argv)
+static FILE* initTargetFile(int argc, char** argv)
 {
     if (argc < 3)
     {
@@ -91,7 +91,7 @@ FILE* initTargetFile(int argc, char** argv)
 }
 
 
-void error(char* message, char* filename)
+static void error(char* message, char* filename)
 {
     printf("%s %s\n", message, filename ? filename : "");
 }

@@ -1,5 +1,4 @@
 #include "RLEList.h"
-//#include "/home/mtm/public/2122b/ex1/RLEList.h"
 #include <stdio.h>
 #include <stdlib.h>
 
@@ -44,8 +43,17 @@ static void MakeString(RLEList list, char *array);
  */
 static void PutValuesInString(RLEList list, char *array);
 
+/**
+ * returns pointer to the node previous to the node received.
+ * @param list
+ * @param toFind - find the previous to this node.
+ */
 static RLEList getPrev(RLEList list, RLEList toFind);
 
+/**
+ * merges the received node with its next and changes the new next accordingly.
+ * @param list
+ */
 static void mergeNodes(RLEList list);
 
 static RLEListResult aux_RLEListMap(RLEList list, MapFunction map_function);
@@ -88,8 +96,6 @@ void RLEListDestroy(RLEList list)
     free(list);
 }
 
-// hey tal you are doing funcs 3-6 so implement them between my
-// funcs 'so it is the same order they wrote it.
 RLEListResult RLEListAppend(RLEList list, char value)
 {
     if (list == NULL)
@@ -169,13 +175,7 @@ RLEListResult RLEListRemove(RLEList list, int index)
             realList->next = NULL;
             free(realList);
             return RLE_LIST_SUCCESS;
-            //realList = list->next;
-            //if(realList->next != NULL && realList->value == realList->next->value)
-            //{
-            //    mergeNodes(realList);
-            //}
         }
-        //return RLE_LIST_SUCCESS;
     }
     RLEList ptr = realList;
     int i = 0;
