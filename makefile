@@ -1,8 +1,6 @@
 CC = gcc
-MAIN_TOK = tool/main
 RLEList_TOK = /home/mtm/public/2122b/ex1/RLEList
-ASCII_ART_TOOL_TOK = tool/AsciiArtTool
-OBJS = $(ASCII_ART_TOOL_TOK).o $(MAIN_TOK).o RLEList.o
+OBJS = tool/AsciiArtTool.o tool/main.o RLEList.o
 EXEC = AsciiArtTool
 DEBUG_FLAG = -g
 COMP_FLAG = -std=c99 -Wall -Werror -I/home/mtm/public/2122b/ex1
@@ -10,11 +8,11 @@ COMP_FLAG = -std=c99 -Wall -Werror -I/home/mtm/public/2122b/ex1
 $(EXEC) : $(OBJS)
 	$(CC) $(DEBUG_FLAG) $(COMP_FLAG) $(OBJS) -o $@
 
-$(ASCII_ART_TOOL_TOK).o: $(ASCII_ART_TOOL_TOK).c $(RLEList_TOK).h $(ASCII_ART_TOOL_TOK).h RLEList.c
-	$(CC) -c $(DEBUG_FLAG) $(COMP_FLAG) $*.c -o $(ASCII_ART_TOOL_TOK).o
+tool/AsciiArtTool.o: tool/AsciiArtTool.c $(RLEList_TOK).h tool/AsciiArtTool.h RLEList.c
+	$(CC) -c $(DEBUG_FLAG) $(COMP_FLAG) $*.c -o $*.o
 
-$(MAIN_TOK).o: $(MAIN_TOK).c $(ASCII_ART_TOOL_TOK).h $(RLEList_TOK).h RLEList.c $(ASCII_ART_TOOL_TOK).c
-	$(CC) -c $(DEBUG_FLAG) $(COMP_FLAG) $*.c -o $(MAIN_TOK).o
+tool/main.o: tool/main.c tool/AsciiArtTool.h $(RLEList_TOK).h RLEList.c tool/AsciiArtTool.c
+	$(CC) -c $(DEBUG_FLAG) $(COMP_FLAG) $*.c -o $*.o
 
 RLEList.o: RLEList.c $(RLEList_TOK).h
 	$(CC) -c $(DEBUG_FLAG) $(COMP_FLAG) $*.c -o RLEList.o
